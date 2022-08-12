@@ -13,7 +13,31 @@ After a careful study of spectral characteristics of heart murmurs from medical 
     \item Z-score normalization to zero mean and unit variance.
 \end{itemize}
 
-\subsection{Neural Networks}
+\subsection{Neural Network Backbones}
 \label{subsec:nn}
 % NOT finished
-\cite{baevski2020wav2vec}, \cite{wolf-etal-2020-transformers}, \cite{Kang_2022_cinc2021_iop}
+
+Inspired by the work of \texttt{wav2vec2} \cite{baevski2020wav2vec}, and under the consideration of exploring and utilizing the powerfulness of (self-supervised) pretrained models \cite{wolf-etal-2020-transformers}, we adopted a shrunken \texttt{wav2vec2} as one of our neural network backbones. ...
+
+Since PCG signals share similar physiological origin as electrocardiogram (ECG) signals, we further adjusted and tested several neural network backbones \cite{Kang_2022_cinc2021_iop} that have proven effective in ECG research problems. ...
+
+\subsection{Multi-Objective Learning}
+\label{subsec:mol}
+% NOT finished
+
+The challenge has 2 tasks, namely ... The challenge dataset \cite{Oliveira_2021_CirCor} further provides heart sound segmentation annotations.
+
+\cite{Caruana_1997_mtl}
+
+\subsection{Training Setups}
+\label{subsec:training}
+% NOT finished
+
+to write
+
+
+\subsection{Demographic Features}
+\label{subsec:demo_feat}
+% NOT finished
+
+to write
