@@ -2,4 +2,18 @@
 \label{sec:methods}
 % NOT finished
 
-to write
+\subsection{Preprocess Pipeline}
+\label{subsec:preproc}
+% NOT finished
+
+After a careful study of spectral characteristics of heart murmurs from medical literature \cite{Donnerstein_1989, Noponen_2007}, and with reference to previous work \cite{Schmidt_2010}, we constructed the PCG signal preprocess pipeline as follows:
+\begin{itemize}
+    \item Resample to 1000 Hz;
+    \item Butterworth bandpass filtering of order 3 and cutoff frequencies 25 - 400 Hz;
+    \item Z-score normalization to zero mean and unit variance.
+\end{itemize}
+
+\subsection{Neural Networks}
+\label{subsec:nn}
+% NOT finished
+\cite{baevski2020wav2vec}, \cite{wolf-etal-2020-transformers}, \cite{Kang_2022_cinc2021_iop}
