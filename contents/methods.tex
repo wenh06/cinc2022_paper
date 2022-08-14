@@ -14,26 +14,24 @@ After a careful study of spectral characteristics of heart murmurs from medical 
 \end{itemize}
 
 \subsection{Neural Network Backbones}
-\label{subsec:nn}
+\label{subsec:backbone}
 % NOT finished
 
-Inspired by the work of \texttt{wav2vec2} \cite{baevski2020wav2vec}, and under the consideration of exploring and utilizing the powerfulness of pretrained models \cite{wolf-etal-2020-transformers}, we adopted a shrunken \texttt{wav2vec2} as one of our neural network backbones and used the time-domain signals, namely the PCG waveforms, as model input, rather than the derived time-frequency-domain signals, for example, the spectrogram. Since PCG signals have significantly lower sampling frequencies compared to conventional human voice audio signals, we reduced the dimension (number of channels) of the encoder of the `wav2vec2` model, as well as its depth (number of hidden layers).
+Inspired by the work of \texttt{wav2vec2} \cite{baevski2020wav2vec}, and under the consideration of exploring and utilizing the powerfulness of pretraining models on larger datasets \cite{wolf-etal-2020-transformers}, we adopted a shrunken \texttt{wav2vec2} as one of our neural network backbones. We used the time-domain signals, namely the PCG waveforms, as model input, rather than the derived time-frequency-domain signals, for example, the spectrogram. Since PCG signals have significantly lower sampling frequencies compared to conventional human voice audio signals, we reduced the dimension (number of channels) of the encoder of the `wav2vec2` model, as well as its depth (number of hidden layers). 
+% The `wav2vec2` model has a small block of convolutions in the bottom used as the feature extractor which extracts feature maps of a fixed dimension from the waveforms and feeds into ...
 
 Considering that PCG signals share a similar physiological origin as electrocardiogram (ECG) signals, we further adjusted and tested several neural network backbones \cite{Kang_2022_cinc2021_iop} that have proven effective in ECG research problems, including multi-branch convolutional neural networks (CNNs), SE-ResNets, TResNets, etc. We enlarged the kernel sizes of each convolution in these backbones by a factor of 2, which is the ratio of the sampling frequencies.
 
-\subsection{Multi-Objective Learning}
-\label{subsec:mol}
+\subsection{Multi-Task Learning}
+\label{subsec:mtl}
 % NOT finished
 
-The challenge has 2 tasks, namely
+The challenge has 2 per-patient classification tasks, namely
 \begin{itemize}
     \item the prediction of the existence of heart murmurs into 3 classes: ``Present'', ``Unknown'', ``Absent'';
     \item the prediction of clinical outcome of the subject into 2 classes: ``Abnormal'', ``Normal''.
 \end{itemize}
-
-... The challenge dataset \cite{Oliveira_2021_CirCor} further provides heart sound segmentation annotations.
-
-\cite{Caruana_1997_mtl}
+The challenge dataset \cite{Oliveira_2021_CirCor} provides per-recording annotations for the former task and heart sound segmentation annotations as well. We applied the paradigm of multi-task learning (MTL) \cite{Caruana_1997_mtl} via hard parameter sharing. More precisely, we use one neural network model for all the tasks. Each task has its specific head, which is typically a stack of linear layers, concatenated to the shared backbone as discussed in Section \ref{subsec:backbone}.
 
 \subsection{Training Setups}
 \label{subsec:training}
@@ -46,4 +44,40 @@ to write
 \label{subsec:demo_feat}
 % NOT finished
 
-to write
+\begin{figure}[!htp]
+\centering
+\begin{subfigure}[b]{0.49\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{images/outcome_murmur_corr.pdf}
+    \caption[]%
+    {{\small to write}}    
+    \label{fig:outcome_murmur_corr}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.49\linewidth}  
+    \centering 
+    \includegraphics[width=\textwidth]{images/outcome_pregnancy_status_corr.pdf}
+    \caption[]%
+    {{\small to write}}    
+    \label{fig:outcome_pregnancy_status_corr}
+\end{subfigure}
+\vskip\baselineskip
+\begin{subfigure}[b]{0.49\linewidth}   
+    \centering 
+    \includegraphics[width=\textwidth]{images/outcome_age_corr.pdf}
+    \caption[]%
+    {{\small to write}}    
+    \label{fig:outcome_age_corr}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.49\linewidth}   
+    \centering 
+    \includegraphics[width=\textwidth]{images/outcome_sex_corr.pdf}
+    \caption[]%
+    {{\small to write}}    
+    \label{fig:outcome_sex_corr}
+\end{subfigure}
+\caption[]
+{\small to write} 
+\label{fig:outcome_corr}
+\end{figure}
