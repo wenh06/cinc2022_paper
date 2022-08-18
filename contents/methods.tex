@@ -30,6 +30,8 @@ Inspired by the work of \texttt{wav2vec2} \cite{baevski2020wav2vec}, and under t
 
 Considering that PCG signals share a similar physiological origin as electrocardiogram (ECG) signals, we further adjusted and tested several neural network backbones \cite{Kang_2022_cinc2021_iop} that have proven effective in ECG research problems, including multi-branch convolutional neural networks (CNNs), SE-ResNets, TResNets, etc. We enlarged the kernel sizes of each convolution in these backbones by a factor of 2, which is the ratio of the sampling frequencies.
 
+TODO: add a table of neural network backbones
+
 \subsection{Multi-Task Learning}
 \label{subsec:mtl}
 % NOT finished
@@ -42,12 +44,23 @@ The challenge \cite{cinc2022} has 2 per-patient classification tasks:
 
 It should be noted that the challenge database \cite{Oliveira_2021_CirCor} provides per-recording annotations for the former task and heart sound segmentation annotations as well. We applied the multi-task learning (MTL) paradigm \cite{Caruana_1997_mtl} via hard parameter sharing. More precisely, we use one neural network model for all the tasks. Each task has its specific model head, typically a stack of linear layers concatenated to the shared backbone as discussed in Section \ref{subsec:backbone}.
 
+TODO: add a figure of the MTL paradigm
+
 \subsection{Training Setups}
 \label{subsec:training}
 % NOT finished
 
 For algorithm development, we divided the publicly available part of the challenge database into the training set and the validation set with a ratio of 8:2. This split was stratified on the categorical attributes ``Age'', ``Sex'', ``Pregnancy status'' and the prediction targets ``Murmur'', ``Outcome''.
 
+TODO: write more....
+
+To alleviate overfitting on the training set and to improve model transferability, during the neural network training process, we applied several types of augmentations to the batched training data stochastically:
+\begin{itemize}
+    \item to write
+    \item to write
+\end{itemize}
+
+TODO: loss, optimizers, etc.
 
 \subsection{Demographic Features}
 \label{subsec:demo_feat}
