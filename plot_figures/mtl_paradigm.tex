@@ -1,10 +1,33 @@
 
-\begin{{figure}
+\begin{figure}[!htp]
 \centering
 
 \begin{tikzpicture}
 
+\tikzstyle{block} = [rectangle, draw, text width = 5.5em, text centered, rounded corners, inner sep = 3pt, minimum height = 1.0em]
+\tikzstyle{bigblock} = [rectangle, draw, text width = 7em, text centered, rounded corners, thick, inner sep = 3pt, minimum height = 2.0em]
+
+\node (input) {PCG Waveforms};
+\node [bigblock, above = 0.7 of input] (backbone) {\textbf{{\larger[2] Backbone}}};
+\node [block, dashed, above left = 0.7 and 0.6 of backbone] (outcome) {Outcome Head};
+\node [block, above = 0.7 and of backbone] (murmur) {Murmur Head};
+\node [block, dashed, above right = 0.7 and 0.6 of backbone] (seg) {Segmentation Head};
+\node [text width = 5.5em, text centered, above = 0.7 of outcome] (outcome_pred) {Outcome Prediction};
+\node [text width = 5.5em, text centered, above = 0.7 of murmur] (murmur_pred) {Murmur Prediction};
+\node [text width = 5.5em, text centered, above = 0.7 of seg] (seg_pred) {Segmentation Prediction};
+
+\path[-stealth] (input) edge ([yshift = -2]backbone.south);
+\path[-stealth, dashed] ([xshift = -25, yshift = 2]backbone.north) edge ([xshift = 20, yshift = -2]outcome.south);
+\path[-stealth, dashed] ([xshift = 25, yshift = 2]backbone.north) edge ([xshift = -20, yshift = -2]seg.south);
+\path[-stealth] ([yshift = 2]backbone.north) edge ([yshift = -2]murmur.south);
+\path[-stealth, dashed] ([yshift = 2]outcome.north) edge (outcome_pred.south);
+\path[-stealth, dashed] ([yshift = 2]seg.north) edge (seg_pred.south);
+\path[-stealth] ([yshift = 2]murmur.north) edge (murmur_pred.south);
+
+\draw[dashed] ([xshift = -35, yshift = -50]outcome.south) rectangle ([xshift = 35, yshift = 5]seg.north);
+\node[below = 1.2 of outcome] {{\larger[1] The Model}};
 \end{tikzpicture}
-\caption[]{to write}
+\caption[]{The paradigm of multi-task learning (MTL) used in our team's approach. The dashed lines indicate optional model heads. The ``Outcome Head'' and the ``Murmur Head'' use pooled features from the ``Backbone'', while the ``Segmentation Head'' uses the unpooled features. The heads correspond to different tasks and share the same backbone.}
 \label{fig:mtl_paradigm}
+
 \end{figure}
