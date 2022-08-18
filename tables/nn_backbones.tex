@@ -1,32 +1,16 @@
 
-% \begin{table}[!htp]
-% \centering
-% \begin{tabular}{r|l}
-%     \hline
-%     Backbone & \# Params \\ \hline
-%     MultiBranch \cite{Kang_2022_cinc2021_iop} & 17.7M \\
-%     SE-ResNet \cite{Kang_2022_cinc2021_iop} & 15.9M \\
-%     ResNet-NC \cite{ribeiro2020automatic} & 15.4M \\
-%     TResNetS \cite{Kang_2022_cinc2021_iop} & 41.0M \\
-%     TResNetF \cite{Kang_2022_cinc2021_iop} & 4.0M \\
-%     wav2vec2 \cite{baevski2020wav2vec} & 19.8M \\ \hline
-% \end{tabular}
-% \caption{to write.}
-% \label{tab:nn_backbone}
-% \end{table}
-
 \begin{table}[!htp]
 \centering
 \begin{tabular}{r|l}
     \hline
-    Backbone & \# Params \\ \hline
-    MultiBranch & 17.7M \\
-    SE-ResNet & 15.9M \\
-    ResNet-NC & 15.4M \\
-    TResNetS & 41.0M \\
-    TResNetF & 4.0M \\
-    wav2vec2 & 19.8M \\ \hline
+    Backbone & \# Params & Input Type \\ \hline
+    MultiBranch \cite{Kang_2022_cinc2021_iop} & 17.7M & waveforms \\
+    SE-ResNet \cite{Kang_2022_cinc2021_iop} & 15.9M & waveforms  \\
+    ResNet-NC \cite{ribeiro2020automatic} & 15.4M & waveforms  \\
+    TResNetS \cite{Kang_2022_cinc2021_iop} & 41.0M & waveforms  \\
+    TResNetF \cite{Kang_2022_cinc2021_iop} & 4.0M & waveforms  \\
+    wav2vec2 \cite{baevski2020wav2vec} & 19.8M & waveforms \\ \hline
 \end{tabular}
-\caption{to write.}
+\caption{Neural network backbones tested for the challenge tasks. wav2vec2 used the \texttt{transformers} \protect\cite{wolf-etal-2020-transformers} implementation \texttt{Wav2Vec2Model} rather than the \texttt{torchaudio} implementation.}
 \label{tab:nn_backbone}
 \end{table}

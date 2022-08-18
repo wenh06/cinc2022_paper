@@ -28,7 +28,7 @@ Inspired by the work of \texttt{wav2vec2} \cite{baevski2020wav2vec}, and under t
 
 % The `wav2vec2` model has a small block of convolutions in the bottom used as the feature extractor which extracts feature maps of a fixed dimension from the waveforms and feeds into ...
 
-% \input{tables/nn_backbones.tex}
+\input{tables/nn_backbones.tex}
 
 Considering that PCG signals share a similar physiological origin as electrocardiogram (ECG) signals, we further adjusted and tested several neural network backbones that have proven effective in ECG problems, including multi-branch convolutional neural networks (MultiBranch), SE-ResNet, TResNetS, TResNetF \cite{Kang_2022_cinc2021_iop}, and ResNet-NC \cite{ribeiro2020automatic} etc. We enlarged the kernel sizes of each convolution in these backbones by a factor of 2, which is the ratio of the sampling frequencies.
 
@@ -40,8 +40,6 @@ The efficacy of the neural network backbones is validated via experiments as ill
 \label{subsec:mtl}
 % NOT finished
 
-\input{plot_figures/mtl.tex}
-
 The challenge \cite{cinc2022} has 2 per-patient classification tasks:
 \begin{itemize}
     \item the prediction of the existence of heart murmurs into 3 classes: ``Present'', ``Unknown'', ``Absent'';
@@ -51,6 +49,10 @@ The challenge \cite{cinc2022} has 2 per-patient classification tasks:
 It should be noted that the challenge database \cite{Oliveira_2021_CirCor} provides per-recording annotations for the former task and heart sound segmentation annotations as well. We applied the multi-task learning (MTL) paradigm \cite{Caruana_1997_mtl} via hard parameter sharing. More precisely, we use one neural network model for all the tasks. Each task has its specific model head, typically a stack of linear layers concatenated to the shared backbone as discussed in Section \ref{subsec:backbone}.
 
 TODO: add a figure of the MTL paradigm
+
+\input{plot_figures/mtl.tex}
+
+As depicted in Figure \ref{fig:mtl}, experiments showed that models (with the same backbone) using an additional segmentation head (denoted as ``MTL3'') usually outperformed models with only two classification heads (denoted as ``MTL2'') for the challenge tasks.
 
 \subsection{Training Setups}
 \label{subsec:training}
@@ -68,7 +70,7 @@ To alleviate overfitting on the training set and to improve model transferabilit
 
 TODO: loss, optimizers, etc.
 
-\input{plot_figures/loss.tex}
+% \input{plot_figures/loss.tex}
 
 \subsection{Demographic Features}
 \label{subsec:demo_feat}
