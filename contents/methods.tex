@@ -28,9 +28,18 @@ Inspired by the work of \texttt{wav2vec2} \cite{baevski2020wav2vec}, and under t
 
 % The `wav2vec2` model has a small block of convolutions in the bottom used as the feature extractor which extracts feature maps of a fixed dimension from the waveforms and feeds into ...
 
-Considering that PCG signals share a similar physiological origin as electrocardiogram (ECG) signals, we further adjusted and tested several neural network backbones \cite{Kang_2022_cinc2021_iop} that have proven effective in ECG research problems, including multi-branch convolutional neural networks (CNNs), SE-ResNets, TResNets, etc. We enlarged the kernel sizes of each convolution in these backbones by a factor of 2, which is the ratio of the sampling frequencies.
+Considering that PCG signals share a similar physiological origin as electrocardiogram (ECG) signals, we further adjusted and tested several neural network backbones \cite{Kang_2022_cinc2021_iop, ribeiro2020automatic} that have proven effective in ECG research problems, including multi-branch convolutional neural networks (CNNs), SE-ResNets, TResNets, etc. We enlarged the kernel sizes of each convolution in these backbones by a factor of 2, which is the ratio of the sampling frequencies.
 
 TODO: add a table of neural network backbones
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[width=\linewidth]{images/compare_nn.pdf}
+\caption{to add}
+\label{fig:compare_nn}
+\end{figure}
+
+\input{plot_figures/mtl.tex}
 
 \subsection{Multi-Task Learning}
 \label{subsec:mtl}
@@ -61,6 +70,8 @@ To alleviate overfitting on the training set and to improve model transferabilit
 \end{itemize}
 
 TODO: loss, optimizers, etc.
+
+\input{plot_figures/loss.tex}
 
 \subsection{Demographic Features}
 \label{subsec:demo_feat}
