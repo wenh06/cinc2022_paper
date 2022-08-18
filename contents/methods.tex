@@ -46,13 +46,13 @@ The challenge \cite{cinc2022} has 2 per-patient classification tasks:
     \item the prediction of clinical outcome of the subject into 2 classes: ``Abnormal'', ``Normal''.
 \end{itemize}
 
-It should be noted that the challenge database \cite{Oliveira_2021_CirCor} provides per-recording annotations for the former task and heart sound segmentation annotations as well. We applied the multi-task learning (MTL) paradigm \cite{Caruana_1997_mtl} via hard parameter sharing. More precisely, we use one neural network model for all the tasks. Each task has its specific model head, typically a stack of linear layers concatenated to the shared backbone as discussed in Section \ref{subsec:backbone}.
+It should be noted that the challenge database \cite{Oliveira_2021_CirCor} provides per-recording annotations for the former task and heart sound segmentation annotations as well. We applied the multi-task learning (MTL) paradigm \cite{Caruana_1997_mtl} via hard parameter sharing. More precisely, we use one neural network model for all the tasks. Each task has its specific model head, typically a stack of linear layers concatenated to the shared backbone as discussed in Section \ref{subsec:backbone}. Our MTL paradigm is illustrated in Figure \ref{fig:mtl_paradigm}.
 
-TODO: add a figure of the MTL paradigm
+\input{plot_figures/mtl_paradigm.tex}
 
-\input{plot_figures/mtl.tex}
+\input{plot_figures/mtl_comparison.tex}
 
-As depicted in Figure \ref{fig:mtl}, experiments showed that models (with the same backbone) using an additional segmentation head (denoted as ``MTL3'') usually outperformed models with only two classification heads (denoted as ``MTL2'') for the challenge tasks.
+As depicted in Figure \ref{fig:mtl_comparison}, experiments showed that models (with the same backbone) using an additional segmentation head (denoted as ``MTL3'') usually outperformed models with only two classification heads (denoted as ``MTL2'') for the challenge tasks.
 
 \subsection{Training Setups}
 \label{subsec:training}

@@ -32,6 +32,10 @@
 *.fdb_latexmk
 *.fls
 *.tmppart
+*.auxlock
+
+tikz/
+!tikz/.keep
 
 
 ##############################################
