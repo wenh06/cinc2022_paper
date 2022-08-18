@@ -2,18 +2,18 @@
 \label{sec:methods}
 % NOT finished
 
-\subsection{The Challenge Database}
-\label{subsec:database}
-% finished
+% \subsection{The Challenge Database}
+% \label{subsec:database}
+% % finished
 
-The challenge database \cite{Oliveira_2021_CirCor} provides multiple PCG recordings collected at different auscultation locations for a number of young subjects. The annotations of the existence of heart murmurs are provided for each recording, along with annotations for heart sound segmentation annotation. The clinical outcomes (clinical diagnostics decisions) are provided for each subject. For algorithm development, we divided the public subset of the challenge database into training set and validation set with ratio 8:2. This split was stratified on the categorical attributes ``Age'', ``Sex'', ``Pregnancy status'' and on the prediction targets ``Murmur'', ``Outcome''.
+% The challenge database \cite{Oliveira_2021_CirCor} provides multiple PCG recordings collected at different auscultation locations for a number of young subjects. The annotations of the existence of heart murmurs are provided for each recording, along with annotations for heart sound segmentation annotation. The clinical outcomes are provided for each subject. For algorithm development, we divided the public subset of the challenge database into the training set and the validation set with a ratio of 8:2. This split was stratified on the categorical attributes ``Age'', ``Sex'', ``Pregnancy status'' and the prediction targets ``Murmur'', ``Outcome''.
 
 
 \subsection{Preprocess Pipeline}
 \label{subsec:preproc}
 % finished
 
-After a careful study of spectral characteristics of heart murmurs from medical literature \cite{Donnerstein_1989, Noponen_2007}, and with reference to previous work \cite{Schmidt_2010}, we constructed the PCG signal preprocess pipeline as follows:
+After a careful study of spectral characteristics of heart murmurs from medical literature \cite{Donnerstein_1989, Noponen_2007}, and with reference to previous work \cite{Schmidt_2010}, we constructed the PCG signal preprocessing pipeline as follows:
 \begin{itemize}
     \item Resample to 1000 Hz;
     \item Butterworth bandpass filtering of order 3 and cutoff frequencies 25 - 400 Hz;
@@ -24,7 +24,8 @@ After a careful study of spectral characteristics of heart murmurs from medical 
 \label{subsec:backbone}
 % NOT finished
 
-Inspired by the work of \texttt{wav2vec2} \cite{baevski2020wav2vec}, and under the consideration of exploring and utilizing the powerfulness of pretraining models on larger databases \cite{wolf-etal-2020-transformers}, we adopted a shrunken \texttt{wav2vec2} as one of our neural network backbones. We used the time-domain signals, namely the PCG waveforms, as model input, rather than the derived time-frequency-domain signals, for example, the spectrogram. Since PCG signals have significantly lower sampling frequencies compared to conventional human voice audio signals, we reduced the dimension (number of channels) of the encoder of the `wav2vec2` model, as well as its depth (number of hidden layers). 
+Inspired by the work of \texttt{wav2vec2} \cite{baevski2020wav2vec}, and under the consideration of exploring and utilizing the powerfulness of pretraining models on larger databases \cite{wolf-etal-2020-transformers}, we adopted a shrunken \texttt{wav2vec2} as one of our neural network backbones. We used the time-domain signals, namely the PCG waveforms, as model input, rather than the derived time-frequency-domain signals, for example, the spectrogram. Since PCG signals have significantly lower sampling frequencies than conventional human voice audio signals, we reduced the dimension (number of channels) of the `wav2vec2` model's encoder and its depth (number of hidden layers).
+
 % The `wav2vec2` model has a small block of convolutions in the bottom used as the feature extractor which extracts feature maps of a fixed dimension from the waveforms and feeds into ...
 
 Considering that PCG signals share a similar physiological origin as electrocardiogram (ECG) signals, we further adjusted and tested several neural network backbones \cite{Kang_2022_cinc2021_iop} that have proven effective in ECG research problems, including multi-branch convolutional neural networks (CNNs), SE-ResNets, TResNets, etc. We enlarged the kernel sizes of each convolution in these backbones by a factor of 2, which is the ratio of the sampling frequencies.
@@ -33,18 +34,19 @@ Considering that PCG signals share a similar physiological origin as electrocard
 \label{subsec:mtl}
 % NOT finished
 
-The challenge has 2 per-patient classification tasks, namely
+The challenge \cite{cinc2022} has 2 per-patient classification tasks:
 \begin{itemize}
     \item the prediction of the existence of heart murmurs into 3 classes: ``Present'', ``Unknown'', ``Absent'';
     \item the prediction of clinical outcome of the subject into 2 classes: ``Abnormal'', ``Normal''.
 \end{itemize}
-It should be noted that the challenge database provides per-recording annotations for the former task and heart sound segmentation annotations as well. We applied the paradigm of multi-task learning (MTL) \cite{Caruana_1997_mtl} via hard parameter sharing. More precisely, we use one neural network model for all the tasks. Each task has its specific head, which is typically a stack of linear layers, concatenated to the shared backbone as discussed in Section \ref{subsec:backbone}.
+
+It should be noted that the challenge database \cite{Oliveira_2021_CirCor} provides per-recording annotations for the former task and heart sound segmentation annotations as well. We applied the multi-task learning (MTL) paradigm \cite{Caruana_1997_mtl} via hard parameter sharing. More precisely, we use one neural network model for all the tasks. Each task has its specific model head, typically a stack of linear layers concatenated to the shared backbone as discussed in Section \ref{subsec:backbone}.
 
 \subsection{Training Setups}
 \label{subsec:training}
 % NOT finished
 
-to write
+For algorithm development, we divided the publicly available part of the challenge database into the training set and the validation set with a ratio of 8:2. This split was stratified on the categorical attributes ``Age'', ``Sex'', ``Pregnancy status'' and the prediction targets ``Murmur'', ``Outcome''.
 
 
 \subsection{Demographic Features}
@@ -57,7 +59,7 @@ to write
     \centering
     \includegraphics[width=\textwidth]{images/outcome_murmur_corr.pdf}
     \caption[]
-    { to write}
+    {Distribution of outcome against the existence of heart murmurs.}
     \label{fig:outcome_murmur_corr}
 \end{subfigure}
 \hfill
@@ -65,7 +67,7 @@ to write
     \centering
     \includegraphics[width=\textwidth]{images/outcome_pregnancy_status_corr.pdf}
     \caption[]
-    { to write}
+    {Distribution of outcome against pregnancy status.}
     \label{fig:outcome_pregnancy_status_corr}
 \end{subfigure}
 \vskip\baselineskip
@@ -73,7 +75,7 @@ to write
     \centering
     \includegraphics[width=\textwidth]{images/outcome_age_corr.pdf}
     \caption[]
-    {to write}
+    {Distribution of outcome against age.}
     \label{fig:outcome_age_corr}
 \end{subfigure}
 \hfill
@@ -81,10 +83,10 @@ to write
     \centering
     \includegraphics[width=\textwidth]{images/outcome_sex_corr.pdf}
     \caption[]
-    {to write}
+    {Distribution of outcome against sex.}
     \label{fig:outcome_sex_corr}
 \end{subfigure}
 \caption[]
-{\small to write}
+{Distribution of outcome against 4 typical categorical demographic variables.}
 \label{fig:outcome_corr}
 \end{figure}

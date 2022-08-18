@@ -21,14 +21,14 @@
 
 % finished
 
-Aim: This work focuses on the problem of heart murmur detection and related clinical diagnosis (outcome) from phonocardiogram (PCG) recordings raised by the George B. Moody PhysioNet Challenge 2022. The heart murmur is an important indicator of cardiac pathologies, especially congenital heart diseases. Its accurate detection helps early clinical intervention of such vital diseases.
+Aim: The George B. Moody PhysioNet Challenge 2022 raised problems of heart murmur detection and related abnormal cardiac function identification from phonocardiogram (PCG) recordings. This work describes the novel approaches developed by our team, Revenger, to these problems.
 
-Methods: PCGs are resampled to 1000 Hz, then filtered with a Butterworth band-pass filter of order 3 and cutoff frequencies 25 - 400 Hz and z-score normalized. We used the multi-task learning (MTL) method via hard parameter sharing to train one neural network model for all the challenge tasks. We performed neural architecture searching (NAS) among a set of network backbones, including multi-branch convolutional neural networks (CNNs), SE-ResNets, TResNets, simplified wav2vec2, etc.
+Methods: PCGs are resampled to 1000 Hz, then filtered with a Butterworth band-pass filter of order 3, cutoff frequencies 25 - 400 Hz, and z-score normalized. We used the multi-task learning (MTL) method via hard parameter sharing to train one neural network model for all the Challenge tasks. We performed neural architecture searching (NAS) among a set of network backbones, including multi-branch convolutional neural networks (CNNs), SE-ResNets, TResNets, simplified wav2vec2, etc.
 
-Based on a stratified splitting of the subjects, 20\% of the public training data were left out as a validation set for model selection. Each recording was padded or sliced to a length of 30 seconds and a batch size of 24 was used for parallel training. The AdamW optimizer was adopted, along with the OneCycle scheduler with a maximum learning rate of 0.002, to optimize the model weights.
+Based on a stratified splitting of the subjects, 20\% of the public data were left out as a validation set for model selection. Each recording was padded or sliced to a length of 30 seconds and a batch size of 24 was used for parallel training. The AdamW optimizer was adopted, along with the OneCycle scheduler with a maximum learning rate of 0.002, to optimize the model weights.
 
-Results: In the challenge official phase, the best outcome cost of our team ``Revenger'' was 9471.652, and our best murmur weighted accuracy was 0.689 on the challenge validation set.
+Results: Our murmur detection classifier received a weighted accuracy score of 0.689 (ranked 79th out of 303 entries) and a Challenge cost score of 9471.652 (ranked 21th out of 303 entries) on the hidden validation set.
 
-Conclusion: We provided an effective solution, which still has improvement spaces, to the problems of detecting heart murmurs and providing clinical diagnosis suggestions from PCGs.
+Conclusion: We provided a practical solution, which still has improvement spaces, to the problems of detecting heart murmurs and providing clinical diagnosis suggestions from PCGs.
 
 \end{abstract}
