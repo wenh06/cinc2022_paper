@@ -33,6 +33,7 @@
 *.fls
 *.tmppart
 *.auxlock
+*.xdv
 
 tikz/
 !tikz/.keep
