@@ -8,13 +8,13 @@
 \tikzstyle{bigblock} = [rectangle, draw, text width = 7em, text centered, rounded corners, thick, inner sep = 3pt, minimum height = 2.0em]
 
 \node (input) {PCG Waveforms};
-\node [bigblock, above = 0.7 of input] (backbone) {\textbf{{\larger[2] Backbone}}};
-\node [block, dashed, above left = 0.7 and 0.6 of backbone] (outcome) {Outcome Head};
-\node [block, above = 0.7 and of backbone] (murmur) {Murmur Head};
-\node [block, dashed, above right = 0.7 and 0.6 of backbone] (seg) {Segmentation Head};
-\node [text width = 5.5em, text centered, above = 0.7 of outcome] (outcome_pred) {Outcome Prediction};
-\node [text width = 5.5em, text centered, above = 0.7 of murmur] (murmur_pred) {Murmur Prediction};
-\node [text width = 5.5em, text centered, above = 0.7 of seg] (seg_pred) {Segmentation Prediction};
+\node [bigblock, above = 0.6 of input] (backbone) {\textbf{{\larger[2] Backbone}}};
+\node [block, dashed, above left = 0.6 and 0.25 of backbone] (outcome) {Outcome Head};
+\node [block, above = 0.6 and of backbone] (murmur) {Murmur Head};
+\node [block, dashed, above right = 0.6 and 0.25 of backbone] (seg) {Segmentation Head};
+\node [text width = 5.5em, text centered, above = 0.6 of outcome] (outcome_pred) {Outcome Prediction};
+\node [text width = 5.5em, text centered, above = 0.6 of murmur] (murmur_pred) {Murmur Prediction};
+\node [text width = 5.5em, text centered, above = 0.6 of seg] (seg_pred) {Segmentation Prediction};
 
 \path[-stealth] (input) edge ([yshift = -2]backbone.south);
 \path[-stealth, dashed] ([xshift = -25, yshift = 2]backbone.north) edge ([xshift = 20, yshift = -2]outcome.south);
@@ -26,6 +26,8 @@
 
 \draw[dashed] ([xshift = -35, yshift = -50]outcome.south) rectangle ([xshift = 35, yshift = 5]seg.north);
 \node[below = 1.2 of outcome] {{\larger[1] The Model}};
+\draw[rounded corners, thick] ([xshift = -40, yshift = -120]outcome_pred.south) rectangle ([xshift = 40, yshift = 5]seg_pred.north);
+
 \end{tikzpicture}
 \caption[]{The paradigm of multi-task learning (MTL) used in our team's approach. The dashed lines indicate optional model heads. The ``Outcome Head'' and the ``Murmur Head'' use pooled features from the ``Backbone'', while the ``Segmentation Head'' uses the unpooled features. The heads correspond to different tasks and share the same backbone.}
 \label{fig:mtl_paradigm}

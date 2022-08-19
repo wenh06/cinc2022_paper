@@ -13,7 +13,7 @@
 \label{subsec:preproc}
 % finished
 
-After a careful study of spectral characteristics of heart murmurs from medical literature \cite{Donnerstein_1989, Noponen_2007}, and with reference to previous work \cite{Schmidt_2010}, we constructed the PCG signal preprocessing pipeline as follows:
+After a careful study of spectral characteristics of heart murmurs from medical literature \cite{Noponen_2007}, and with reference to previous work \cite{Schmidt_2010}, we constructed the PCG signal preprocessing pipeline as follows:
 \begin{itemize}
     \item Resample to 1000 Hz;
     \item Butterworth bandpass filtering of order 3 and cutoff frequencies 25 - 400 Hz;
@@ -22,9 +22,9 @@ After a careful study of spectral characteristics of heart murmurs from medical 
 
 \subsection{Neural Network Backbones}
 \label{subsec:backbone}
-% almost finished
+% finished
 
-Inspired by the work of \texttt{wav2vec2} \cite{baevski2020wav2vec}, and under the consideration of exploring and utilizing the powerfulness of pretraining models on larger databases \cite{wolf-etal-2020-transformers}, we adopted a shrunken \texttt{wav2vec2} as one of our neural network backbones. We used the time-domain signals, namely the PCG waveforms, as model input, rather than the derived time-frequency-domain signals, for example, the spectrogram. Since PCG signals have significantly lower sampling frequencies than conventional human voice audio signals, we reduced the dimension (number of channels) of the `wav2vec2` model's encoder and its depth (number of hidden layers).
+Inspired by the work of wav2vec2 \cite{baevski2020wav2vec}, and under the consideration of exploring and utilizing the powerfulness of pretraining models on larger databases, we adopted a shrunken \texttt{wav2vec2} as one of our neural network backbones. We used the time-domain signals, namely the PCG waveforms, as model input, rather than the derived time-frequency-domain signals, for example, the spectrogram. Since PCGs have significantly lower sampling rates than conventional human voice audio signals, we reduced the dimension (number of channels) of the `wav2vec2` model's encoder and its depth (number of hidden layers).
 
 % The `wav2vec2` model has a small block of convolutions in the bottom used as the feature extractor which extracts feature maps of a fixed dimension from the waveforms and feeds into ...
 
@@ -32,13 +32,13 @@ Inspired by the work of \texttt{wav2vec2} \cite{baevski2020wav2vec}, and under t
 
 Considering that PCG signals share a similar physiological origin as electrocardiogram (ECG) signals, we further adjusted and tested several neural network backbones that have proven effective in ECG problems, including multi-branch convolutional neural networks (MultiBranch), SE-ResNet, TResNetS, TResNetF \cite{Kang_2022_cinc2021_iop}, and ResNet-NC \cite{ribeiro2020automatic} etc. We enlarged the kernel sizes of each convolution in these backbones by a factor of 2, which is the ratio of the sampling frequencies.
 
-The efficacy of the neural network backbones is validated via experiments as illustrated in Figure \ref{fig:compare_nn}.
+The efficacy of most of the neural network backbones is validated via experiments as illustrated in Figure \ref{fig:compare_nn}. The learning process of the wav2vec2 model was interrupted at an early stage. The cause for this abnormal phenomenon is left for further studies.
 
 \input{plot_figures/compare_nn.tex}
 
 \subsection{Multi-Task Learning}
 \label{subsec:mtl}
-% NOT finished
+% finished
 
 The challenge \cite{cinc2022} has 2 per-patient classification tasks:
 \begin{itemize}
@@ -50,27 +50,28 @@ It should be noted that the challenge database \cite{Oliveira_2021_CirCor} provi
 
 \input{plot_figures/mtl_paradigm.tex}
 
-\input{plot_figures/mtl_comparison.tex}
-
 As depicted in Figure \ref{fig:mtl_comparison}, experiments showed that models (with the same backbone) using an additional segmentation head (denoted as ``MTL3'') usually outperformed models with only two classification heads (denoted as ``MTL2'') for the challenge tasks.
+
+\input{plot_figures/mtl_comparison.tex}
 
 \subsection{Training Setups}
 \label{subsec:training}
 % NOT finished
 
-For algorithm development, we divided the publicly available part of the challenge database into the training set and the validation set with a ratio of 8:2. This split was stratified on the categorical attributes ``Age'', ``Sex'', ``Pregnancy status'' and the prediction targets ``Murmur'', ``Outcome''.
 
-TODO: write more....
+For algorithm development, we divided the publicly available part of the challenge database into the training set and the validation set with a ratio of 8:2. This split was stratified on the attributes ``Age'', ``Sex'', ``Pregnancy status'' and the prediction targets ``Murmur'', ``Outcome''.
 
-To alleviate overfitting on the training set and to improve model transferability, during the neural network training process, we applied several types of augmentations to the batched training data stochastically:
+The batch size was set at 32 for model training with the maximum number of epochs set at 60. Model parameters were optimized using the AMSGrad variant of the AdamW optimizer along with the \texttt{OneCycle} scheduler. We froze the backbone from a specific epoch (usually 30).
+
+To alleviate overfitting on the training set, the early stopping callback was added. To further improve model transferability, we applied several types of augmentations to the batched training data stochastically:
 \begin{itemize}
-    \item to write
-    \item to write
+    \item adding coloured noises;
+    \item polarity inversion (flipping).
 \end{itemize}
 
 TODO: loss, optimizers, etc.
 
-% \input{plot_figures/loss.tex}
+\input{plot_figures/loss.tex}
 
 \subsection{Demographic Features}
 \label{subsec:demo_feat}
