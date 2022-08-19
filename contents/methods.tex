@@ -61,7 +61,7 @@ As depicted in Figure \ref{fig:mtl_comparison}, experiments showed that models (
 
 For algorithm development, we divided the publicly available part of the challenge database into the training set and the validation set with a ratio of 8:2. This split was stratified on the attributes ``Age'', ``Sex'', ``Pregnancy status'' and the prediction targets ``Murmur'', ``Outcome''.
 
-The batch size was set at 32 for model training with the maximum number of epochs set at 60. Model parameters were optimized using the AMSGrad variant of the AdamW optimizer along with the \texttt{OneCycle} scheduler. We froze the backbone from a specific epoch (usually 30).
+The batch size was set at 32 for model training, with the maximum number of epochs set at 60. Model parameters were optimized using the AMSGrad variant of the AdamW optimizer along with the \texttt{OneCycle} scheduler. We froze the backbone from a specific epoch (usually 30).
 
 To alleviate overfitting on the training set, the early stopping callback was added. To further improve model transferability, we applied several types of augmentations to the batched training data stochastically:
 \begin{itemize}
@@ -69,7 +69,7 @@ To alleviate overfitting on the training set, the early stopping callback was ad
     \item polarity inversion (flipping).
 \end{itemize}
 
-TODO: loss, optimizers, etc.
+We experimented with two types of loss functions: the asymmetric loss (denoted ``Loss-A''); the weighted binary cross entropy (denoted ``Loss-B''). The weights were obtained from the weight matrix of the challenge scoring functions \cite{cinc2022}. The superiority of Loss-B was observed, as was illustrated in Figure \ref{fig:clf-se-resnet-lossA-vs-lossB}.
 
 \input{plot_figures/loss.tex}
 
