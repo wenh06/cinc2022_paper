@@ -51,7 +51,7 @@ As depicted in Figure \ref{fig:mtl_comparison}, experiments showed that models (
 Our neural network models produce per-recording predictions for the Challenge tasks. To obtain per-patient predictions, we used the simple greedy rule described in Algorithm \ref{alg:greedy}.
 
 \begin{algorithm}
-\SetKwComment{Comment}{/* }{ */}
+% \SetKwComment{Comment}{/* }{ */}
 \SetInd{0.2em}{2em}
 \uIf{at least on recording positive}{
     \textbf{Positive} for the patient\;
@@ -71,7 +71,7 @@ Our neural network models produce per-recording predictions for the Challenge ta
 
 For algorithm development, we divided the publicly available part of the Challenge database into the training set and the validation set with a ratio of 8:2. This split was stratified on the attributes ``Age'', ``Sex'', ``Pregnancy status'' and the prediction targets ``Murmur'', ``Outcome''.
 
-The batch size was set at 32 for model training, with the maximum number of epochs set at 60. Model parameters were optimized using the AMSGrad variant of the AdamW optimizer \cite{adamw_amsgrad} along with the \texttt{OneCycle} scheduler \cite{smith2019one_cycle}. We froze the backbone from a specific epoch (usually 30).
+The batch size was set at 32 for model training, with the maximum number of epochs set at 60. Model parameters were optimized using the AMSGrad variant of the AdamW optimizer \cite{adamw_amsgrad} along with the \texttt{OneCycle} scheduler \cite{smith2019one_cycle}. We froze the backbone from a specific epoch (usually 30), only updating the parameters of the task heads.
 
 To alleviate overfitting on the training set, the early stopping callback was added. To further improve model transferability, we applied several types of augmentations to the batched training data stochastically:
 \begin{itemize}
