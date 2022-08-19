@@ -73,7 +73,7 @@ For algorithm development, we divided the publicly available part of the Challen
 
 The batch size was set at 32 for model training, with the maximum number of epochs set at 60. Model parameters were optimized using the AMSGrad variant of the AdamW optimizer \cite{adamw_amsgrad} along with the \texttt{OneCycle} scheduler \cite{smith2019one_cycle}. We froze the backbone from a specific epoch (usually 30), only updating the parameters of the task heads.
 
-To alleviate overfitting on the training set, the early stopping callback was added. To further improve model transferability, we applied several types of augmentations to the batched training data stochastically:
+To alleviate overfitting on the training set, an early stopping callback was added. To further improve model transferability, we applied several types of augmentations to the batched training data stochastically:
 \begin{itemize}
     \item adding coloured noises;
     \item polarity inversion (flipping).
@@ -87,6 +87,6 @@ We experimented with two types of loss functions: the asymmetric loss (denoted `
 \label{subsec:demo_feat}
 % finished
 
-For the public data of the Challenge, some demographic features are strongly correlated with the prediction target ``Outcome'', as can be inferred from Figure \ref{fig:outcome_corr}. Experiments and official phase submissions showed that an auxilliiary random forest classifier using these features and the murmur predictions improved the outcome scores (reduced the outcome cost). However, we did not use such auxilliiary models in our final submission, since the distribution of these features might be completely different in the hidden data. Moreover, no supportive medical literature was found to support this point.
+For the public data of the Challenge, some demographic features are strongly correlated with the prediction target ``Outcome'', as can be inferred from Figure \ref{fig:outcome_corr}. Experiments and official phase submissions showed that an auxiliary random forest classifier using these features and the murmur predictions improved the outcome scores (reduced the outcome cost). However, we did not use such auxiliary models in our final submission, since the distribution of these features might be completely different in the hidden data. Moreover, no supportive medical literature was found to support this point.
 
 \input{plot_figures/dem_features.tex}
