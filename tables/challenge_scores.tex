@@ -1,0 +1,15 @@
+
+\begin{table}[!htp]
+\centering
+\begin{tabular}{r|c|c|c}
+    \hline
+    & Murmur & \multicolumn{2}{c}{Outcome} \\
+    & wt. acc. & \multicolumn{1}{c}{cost} & \multicolumn{1}{c}{wt. acc.} \\ \hline
+    Train & $0.88\pm 0.05$ & $8452\pm 2324$ & $0.88\pm 0.07$ \\
+    Train-val & $0.86\pm 0.01$ & $11341\pm 336$ & $0.79\pm 0.05$ \\ \hline
+    Hidden val & \textbf{0.689} & \textbf{9471.652} & NA \\
+    Ranking & \textbf{79/303} & \textbf{21/303} & NA \\ \hline
+\end{tabular}
+\caption{Primary scores on the train, validation (Train-val), and hidden validation sets. wt. acc. is the abbreviation for weighted accuracy. Scores on the train and validation sets are of the form $mean \pm std. dev.$ calculated over all our offline experiments.}
+\label{tab:challenge_scores}
+\end{table}

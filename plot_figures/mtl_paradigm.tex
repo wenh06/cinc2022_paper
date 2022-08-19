@@ -26,7 +26,7 @@
 
 \draw[dashed] ([xshift = -35, yshift = -50]outcome.south) rectangle ([xshift = 35, yshift = 5]seg.north);
 \node[below = 1.2 of outcome] {{\larger[1] The Model}};
-\draw[rounded corners, thick] ([xshift = -40, yshift = -120]outcome_pred.south) rectangle ([xshift = 40, yshift = 5]seg_pred.north);
+\draw[rounded corners, thick] ([xshift = -40, yshift = -112]outcome_pred.south) rectangle ([xshift = 40, yshift = 0]seg_pred.north);
 
 \end{tikzpicture}
 \caption[]{The paradigm of multi-task learning (MTL) used in our team's approach. The dashed lines indicate optional model heads. The ``Outcome Head'' and the ``Murmur Head'' use pooled features from the ``Backbone'', while the ``Segmentation Head'' uses the unpooled features. The heads correspond to different tasks and share the same backbone.}
