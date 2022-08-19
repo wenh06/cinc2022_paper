@@ -6,7 +6,7 @@
 % \label{subsec:database}
 % % finished
 
-% The challenge database \cite{Oliveira_2021_CirCor} provides multiple PCG recordings collected at different auscultation locations for a number of young subjects. The annotations of the existence of heart murmurs are provided for each recording, along with annotations for heart sound segmentation annotation. The clinical outcomes are provided for each subject. For algorithm development, we divided the public subset of the challenge database into the training set and the validation set with a ratio of 8:2. This split was stratified on the categorical attributes ``Age'', ``Sex'', ``Pregnancy status'' and the prediction targets ``Murmur'', ``Outcome''.
+% The Challenge database \cite{Oliveira_2021_CirCor} provides multiple PCG recordings collected at different auscultation locations for a number of young subjects. The annotations of the existence of heart murmurs are provided for each recording, along with annotations for heart sound segmentation annotation. The clinical outcomes are provided for each subject. For algorithm development, we divided the public subset of the Challenge database into the training set and the validation set with a ratio of 8:2. This split was stratified on the categorical attributes ``Age'', ``Sex'', ``Pregnancy status'' and the prediction targets ``Murmur'', ``Outcome''.
 
 
 \subsection{Preprocess Pipeline}
@@ -40,25 +40,36 @@ The efficacy of most of the neural network backbones is validated via experiment
 \label{subsec:mtl}
 % finished
 
-The challenge \cite{cinc2022} has 2 per-patient classification tasks:
-\begin{itemize}
-    \item the prediction of the existence of heart murmurs into 3 classes: ``Present'', ``Unknown'', ``Absent'';
-    \item the prediction of clinical outcome of the subject into 2 classes: ``Abnormal'', ``Normal''.
-\end{itemize}
-
-It should be noted that the challenge database \cite{Oliveira_2021_CirCor} provides per-recording annotations for the former task and heart sound segmentation annotations as well. We applied the multi-task learning (MTL) paradigm \cite{Caruana_1997_mtl} via hard parameter sharing. More precisely, we use one neural network model for all the tasks. Each task has its specific model head, typically a stack of linear layers concatenated to the shared backbone as discussed in Section \ref{subsec:backbone}. Our MTL paradigm is illustrated in Figure \ref{fig:mtl_paradigm}.
+The 2 Challenge tasks \cite{cinc2022} are per-patient classification tasks. It should be noted that the Challenge database \cite{Oliveira_2021_CirCor} provides per-recording annotations for the murmur detection task and heart sound segmentation annotations as well. We applied the multi-task learning (MTL) paradigm \cite{Caruana_1997_mtl} on each recording via hard parameter sharing. More precisely, we use one neural network model for all the tasks. Each task has its specific model head, typically a stack of linear layers concatenated to the shared backbone as discussed in Section \ref{subsec:backbone}. Our MTL paradigm is illustrated in Figure \ref{fig:mtl_paradigm}.
 
 \input{plot_figures/mtl_paradigm.tex}
 
-As depicted in Figure \ref{fig:mtl_comparison}, experiments showed that models (with the same backbone) using an additional segmentation head (denoted as ``MTL3'') usually outperformed models with only two classification heads (denoted as ``MTL2'') for the challenge tasks.
+As depicted in Figure \ref{fig:mtl_comparison}, experiments showed that models (with the same backbone) using an additional segmentation head (denoted as ``MTL3'') usually outperformed models with only two classification heads (denoted as ``MTL2'') for the Challenge tasks.
 
 \input{plot_figures/mtl_comparison.tex}
+
+Our neural network models produce per-recording predictions for the Challenge tasks. To obtain per-patient predictions, we used the simple greedy rule described in Algorithm \ref{alg:greedy}.
+
+\begin{algorithm}
+\SetKwComment{Comment}{/* }{ */}
+\SetInd{0.2em}{2em}
+\uIf{at least on recording positive}{
+    \textbf{Positive} for the patient\;
+}
+\uElseIf{all recording negative}{
+    \textbf{Negative} for the patient\;
+}
+\Else(\tcp*[h]{for murmur detection only}){
+    \textbf{Unknown} for the patient\;
+}
+\caption{The algorithm to obtain per-patient predictions}\label{alg:greedy}
+\end{algorithm}
 
 \subsection{Training Setups}
 \label{subsec:training}
 % finished
 
-For algorithm development, we divided the publicly available part of the challenge database into the training set and the validation set with a ratio of 8:2. This split was stratified on the attributes ``Age'', ``Sex'', ``Pregnancy status'' and the prediction targets ``Murmur'', ``Outcome''.
+For algorithm development, we divided the publicly available part of the Challenge database into the training set and the validation set with a ratio of 8:2. This split was stratified on the attributes ``Age'', ``Sex'', ``Pregnancy status'' and the prediction targets ``Murmur'', ``Outcome''.
 
 The batch size was set at 32 for model training, with the maximum number of epochs set at 60. Model parameters were optimized using the AMSGrad variant of the AdamW optimizer \cite{adamw_amsgrad} along with the \texttt{OneCycle} scheduler \cite{smith2019one_cycle}. We froze the backbone from a specific epoch (usually 30).
 
@@ -68,7 +79,7 @@ To alleviate overfitting on the training set, the early stopping callback was ad
     \item polarity inversion (flipping).
 \end{itemize}
 
-We experimented with two types of loss functions: the asymmetric loss (denoted ``Loss-A''); the weighted binary cross entropy (denoted ``Loss-B''). The weights were obtained from the weight matrix of the challenge scoring functions \cite{cinc2022}. The superiority of Loss-B was observed, as was illustrated in Figure \ref{fig:clf-se-resnet-lossA-vs-lossB}.
+We experimented with two types of loss functions: the asymmetric loss (denoted ``Loss-A''); the weighted binary cross entropy (denoted ``Loss-B''). The weights were obtained from the weight matrix of the Challenge scoring functions \cite{cinc2022}. The superiority of Loss-B was observed, as was illustrated in Figure \ref{fig:clf-se-resnet-lossA-vs-lossB}.
 
 \input{plot_figures/loss.tex}
 
@@ -76,6 +87,6 @@ We experimented with two types of loss functions: the asymmetric loss (denoted `
 \label{subsec:demo_feat}
 % finished
 
-For the public data of the challenge, some demographic features are strongly correlated with the prediction target ``Outcome'', as can be inferred from Figure \ref{fig:outcome_corr}. Experiments and official phase submissions showed that an auxilliiary random forest classifier using these features and the murmur predictions improved the outcome scores (reduced the outcome cost). However, we did not use such auxilliiary models in our final submission, since the distribution of these features might be completely different in the hidden data. Moreover, no supportive medical literature was found to support this point.
+For the public data of the Challenge, some demographic features are strongly correlated with the prediction target ``Outcome'', as can be inferred from Figure \ref{fig:outcome_corr}. Experiments and official phase submissions showed that an auxilliiary random forest classifier using these features and the murmur predictions improved the outcome scores (reduced the outcome cost). However, we did not use such auxilliiary models in our final submission, since the distribution of these features might be completely different in the hidden data. Moreover, no supportive medical literature was found to support this point.
 
 \input{plot_figures/dem_features.tex}
