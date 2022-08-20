@@ -1,0 +1,69 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% preamble
+
+\documentclass[twocolumn]{cinc}
+\usepackage{mathtools, graphicx, xurl, hyperref}
+% \usepackage{tikz-cd}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,external,decorations.pathmorphing,backgrounds,positioning,fit,petri,calc,hobby,cd}
+% \tikzexternalize[prefix=tikz/,optimize command away=\includepdf]
+\usepackage{subcaption}
+\usepackage{relsize}
+\usepackage[ruled,vlined]{algorithm2e}
+
+% \tikzstyle{smallcircleblock} = [circle, draw, text width = 0.7em, text centered]
+
+% \tikzstyle{wideblock} = [rectangle, draw, text width = 6.5em, text centered, rounded corners, inner sep = 7pt, minimum height = 1.0em]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% title, author, institution
+
+\title{Searching for Effective Neural Network Architectures for Heart Murmur Detection from Phonocardiogram}
+\author{Hao Wen\textsuperscript{1},
+Jingsu Kang\textsuperscript{2} \\ \ \\
+\textsuperscript{1}LMIB and School of Mathematical Sciences, Beihang University, Beijing, China\\
+\textsuperscript{2}Tianjin Medical University, Tianjin, China
+}
+
+\begin{document}
+\maketitle
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% abstract
+\input{contents_long/abstract}
+
+% main body of the paper
+
+\input{contents_long/introduction}
+
+\input{contents_long/methods}
+
+\input{contents_long/results}
+
+\input{contents_long/discussions}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% acknowledgements
+
+% \input{contents_long/acknowledgements}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\bibliographystyle{cinc}
+\bibliography{references}
+
+% \begin{correspondence}
+% Jingsu Kang\\
+% No. 22, Qixiangtai Road, Heping District, Tianjin, China\\
+% kangjingsu@tmu.edu.cn,kjs890223@gmail.com
+% \end{correspondence}
+
+\balance
+
+\end{document}
