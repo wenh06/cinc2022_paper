@@ -79,18 +79,19 @@ boxshade=plain
 %	TITLE AND AUTHOR NAME
 %----------------------------------------------------------------------------------------
 %
-{\includegraphics[scale=0.092]{logo_tmu.jpeg}}
+{\includegraphics[scale=0.084]{logo_buaa_math.jpg}} % University/lab logo
 {
 % \bf \LARGE{Hybrid Arrhythmia Detection on Varying-Dimensional ECG} \\
 {\bf \fontsize{19pt}{19pt} \selectfont Searching for Effective Neural Network Architectures} \\
 {\it \LARGE  for Heart Murmur Detection from Phonocardiogram}
 } % Poster title
-{\vspace{0.3em} \smaller Jingsu KANG$^1$, Hao WEN$^2$  \\  % Author names
+{\vspace{0.3em} \smaller Hao WEN$^1$, Jingsu KANG$^2$  \\  % Author names
   
-\smaller $^1${\it Tianjin Medical University} \\ $^2${\it LIMB and School of Mathematical Sciences, Beihang University} \\
-{\Large The George B. Moody PhysioNet Challenge 2022, ~~~\bf{Team Revenger}}
-} % Author email addresses
-{\includegraphics[scale=0.084]{logo_buaa_math.jpg}} % University/lab logo
+\smaller $^1${\it LIMB and School of Mathematical Sciences, Beihang University} \\
+$^2${\it Tianjin Medical University} \\ 
+{\Large \bf{The George B. Moody PhysioNet Challenge 2022}, ~~~\bf{Team Revenger}}
+}
+{\includegraphics[scale=0.092]{logo_tmu.jpeg}}
 
 
 %----------------------------------------------------------------------------------------
@@ -110,8 +111,73 @@ boxshade=plain
 %	NN architecture
 %----------------------------------------------------------------------------------------
 
-\headerbox{Neural Network Architecture}{name=nn, column=0, below=introduction}{
-% not finished
+\headerbox{Neural Network Backbones}{name=nn, column=0, below=introduction}{
+% finished
+
+\includegraphics[width=\linewidth]{images/compare_nn.pdf}
+
+}
+
+%----------------------------------------------------------------------------------------
+%	MTL
+%----------------------------------------------------------------------------------------
+
+\headerbox{Multi-Task Learning}{name=mtl, span=2, column=1, row=1, below=introduction}{
+% finished
+
+\begin{tikzpicture}
+
+\tikzstyle{block} = [rectangle, draw, text width = 5.5em, text centered, rounded corners, inner sep = 3pt, minimum height = 1.0em]
+\tikzstyle{bigblock} = [rectangle, draw, text width = 7em, text centered, rounded corners, thick, inner sep = 3pt, minimum height = 2.0em]
+
+\node (input) {PCG Waveforms};
+\node [bigblock, above = 0.6 of input] (backbone) {\textbf{{\larger[1] Backbone}}};
+\node [block, dashed, above left = 0.6 and 0.05 of backbone] (outcome) {Outcome Head};
+\node [block, above = 0.6 and of backbone] (murmur) {Murmur Head};
+\node [block, dashed, above right = 0.6 and 0.05 of backbone] (seg) {Segmentation Head};
+\node [text width = 5.5em, text centered, above = 0.6 of outcome] (outcome_pred) {Outcome Prediction};
+\node [text width = 5.5em, text centered, above = 0.6 of murmur] (murmur_pred) {Murmur Prediction};
+\node [text width = 5.5em, text centered, above = 0.6 of seg] (seg_pred) {Segmentation Prediction};
+
+\path[-stealth] (input) edge ([yshift = -2]backbone.south);
+\path[-stealth, dashed] ([xshift = -25, yshift = 2]backbone.north) edge ([xshift = 20, yshift = -2]outcome.south);
+\path[-stealth, dashed] ([xshift = 25, yshift = 2]backbone.north) edge ([xshift = -20, yshift = -2]seg.south);
+\path[-stealth] ([yshift = 2]backbone.north) edge ([yshift = -2]murmur.south);
+\path[-stealth, dashed] ([yshift = 2]outcome.north) edge (outcome_pred.south);
+\path[-stealth, dashed] ([yshift = 2]seg.north) edge (seg_pred.south);
+\path[-stealth] ([yshift = 2]murmur.north) edge (murmur_pred.south);
+
+\draw[dashed] ([xshift = -35, yshift = -50]outcome.south) rectangle ([xshift = 35, yshift = 5]seg.north);
+\node[below = 0.95 of outcome, text width = 4em, align = left] {{\larger[1] The Model}};
+\draw[rounded corners, thick] ([xshift = -40, yshift = -112]outcome_pred.south) rectangle ([xshift = 40, yshift = 2]seg_pred.north);
+
+\end{tikzpicture}%
+\includegraphics[width=0.5\linewidth]{images/se-resnet-clf-vs-mtl.pdf}
+
+}
+
+%----------------------------------------------------------------------------------------
+%	Loss functions comparison
+%----------------------------------------------------------------------------------------
+
+\headerbox{Loss functions}{name=loss, column=0, span=1, below=nn}{
+% finished
+
+\includegraphics[width=\linewidth]{images/mtl-se-resnet-lossA-vs-lossB.pdf}
+% \vspace{-0.5cm}
+\begin{itemize}
+    \item Loss-A: Asymmetric Loss
+    \vspace{-0.2cm}
+    \item Loss-B: Weighted Binary Cross Entropy Loss
+\end{itemize}
+
+}
+%----------------------------------------------------------------------------------------
+%	Loss functions comparison
+%----------------------------------------------------------------------------------------
+
+\headerbox{Demographic Features}{name=dem, column=0, span=1, below=loss}{
+% NOT finished
 
 to write
 
@@ -121,10 +187,17 @@ to write
 %	Preprocessing, Augmentations
 %----------------------------------------------------------------------------------------
 
-\headerbox{Preprocessing and Augmentations For Training DNNs}{name=data, span=2, column=1, row=1, below=introduction}{
+\headerbox{Preprocess Pipeline and Augmentations}{name=data, column=1, row=1, span=2, below=mtl}{
 % not finished
 \begin{itemize}
-    \item to write
+    \item Resampling to 1000 Hz.
+    \vspace{-0.2cm}
+    \item Butterworth bandpass filtering of order 3 and cutoff frequencies 25 - 400 Hz.
+    \vspace{-0.2cm}
+    \item Z-score normalization to zero mean and unit variance.
+    \item adding coloured noises.
+    \vspace{-0.2cm}
+    \item polarity inversion (flipping).
 \end{itemize}
 }
 
@@ -133,9 +206,15 @@ to write
 %----------------------------------------------------------------------------------------
 
 \headerbox{Training Setups}{name=training,span=2,column=1,row=1, below=data}{
-% not finished
+% finished
 \begin{itemize}
-    \item to write
+    \item optimizer: AMSGrad variant of {\bf AdamW} with {\bf OneCycleLR} scheduler.
+    \vspace{-0.2cm}
+    \item stratified train-val split: 80\% -- 20\%.
+    \vspace{-0.2cm}
+    \item batch size 32; epoch number $\leq 60$ with early stopping.
+    \vspace{-0.2cm}
+    \item freeze backbone from specific epoch (typically 30).
 \end{itemize}
 }
 
@@ -144,27 +223,26 @@ to write
 %	Submission Results
 %----------------------------------------------------------------------------------------
 
-\headerbox{Submission Results}{name=submission, span=1, column=1, below=training}{
-% not finished
-to write
+\headerbox{Submission Results}{name=submission, span=2, column=1, below=training}{
+% finished
+\begin{center}
+\begin{tabular}{r|c|c|c}
+    \hline
+    & \textbf{Murmur} & \multicolumn{2}{c}{\textbf{Outcome}} \\
+    & \textbf{weighted accuracy} & \multicolumn{1}{c}{\textbf{cost}} & \multicolumn{1}{c}{weighted accuracy} \\ \hline
+    Train & $0.88\pm 0.05$ & $8452\pm 2324$ & $0.88\pm 0.07$ \\
+    Train-val & $0.86\pm 0.01$ & $11341\pm 336$ & $0.79\pm 0.05$ \\ \hline
+    Hidden val & \textbf{0.689} & \textbf{9471.652} & NA \\
+    Ranking & \textbf{79/303} & \textbf{21/303} & NA \\ \hline
+\end{tabular}
+\end{center}
 }
-
-
-%----------------------------------------------------------------------------------------
-%	Offline Evaluation Results
-%----------------------------------------------------------------------------------------
-
-\headerbox{Offline Train-Eval Results}{name=offline, span=1, column=2, below=training}{
-% not finished
-to write
-}
-
 
 %----------------------------------------------------------------------------------------
 %	Limitations, Discussions
 %----------------------------------------------------------------------------------------
 
-\headerbox{Limitations and Discussions}{name=discussion, column=0, below=nn, span=3}{
+\headerbox{Limitations and Discussions}{name=discussion, column=0, below=submission, span=3}{
 % not finished
 \begin{itemize} 
 \item to write
