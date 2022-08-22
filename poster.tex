@@ -79,7 +79,7 @@ boxshade=plain
 %	TITLE AND AUTHOR NAME
 %----------------------------------------------------------------------------------------
 %
-{\includegraphics[scale=0.084]{logo_buaa_math.jpg}} % University/lab logo
+{\includegraphics[scale=0.090]{logo_buaa_math.jpg}} % University/lab logo
 {
 % \bf \LARGE{Hybrid Arrhythmia Detection on Varying-Dimensional ECG} \\
 {\bf \fontsize{19pt}{19pt} \selectfont Searching for Effective Neural Network Architectures} \\
@@ -87,11 +87,12 @@ boxshade=plain
 } % Poster title
 {\vspace{0.3em} \smaller Hao WEN$^1$, Jingsu KANG$^2$  \\  % Author names
   
-\smaller $^1${\it LIMB and School of Mathematical Sciences, Beihang University} \\
-$^2${\it Tianjin Medical University} \\ 
+$^1${\it LIMB and School of Mathematical Sciences, Beihang University} \\
+$^2${\it Tianjin Medical University} \\
+\vspace{0.2cm}
 {\Large \bf{The George B. Moody PhysioNet Challenge 2022}, ~~~\bf{Team Revenger}}
 }
-{\includegraphics[scale=0.092]{logo_tmu.jpeg}}
+{\includegraphics[scale=0.103]{logo_tmu.jpeg}}
 
 
 %----------------------------------------------------------------------------------------
@@ -99,10 +100,14 @@ $^2${\it Tianjin Medical University} \\
 %----------------------------------------------------------------------------------------
 
 \headerbox{Introduction}{name=introduction, column=0, row=0, span=3}{
-% not finished
+% finished
 
 \begin{itemize}
-    \item to write
+    \item We used \textbf{neural network models} to make per-recording predictions, then used a simple \textbf{greedy rule} to obtain per-patient predictions.
+    \vspace{-0.2cm}
+    \item We applied the \textbf{multi-task learning (MTL)} paradigm via hard parameter sharing to make predictions using \textbf{ONE} model. The model has 2 classification heads (murmur and outcome, denoted ``MTL2'') or 3 (denoted ``MTL3'') with an additional segmentation head.
+    \vspace{-0.2cm}
+    \item We performed extensive \textbf{architecture searching for the backbone (the shared parameters)} of the neural network model.
 \end{itemize}
 }
 
@@ -115,6 +120,8 @@ $^2${\it Tianjin Medical University} \\
 % finished
 
 \includegraphics[width=\linewidth]{images/compare_nn.pdf}
+
+A part of the backbones (the shared representation) we experimented with.
 
 }
 
@@ -149,10 +156,12 @@ $^2${\it Tianjin Medical University} \\
 
 \draw[dashed] ([xshift = -35, yshift = -50]outcome.south) rectangle ([xshift = 35, yshift = 5]seg.north);
 \node[below = 0.95 of outcome, text width = 4em, align = left] {{\larger[1] The Model}};
-\draw[rounded corners, thick] ([xshift = -40, yshift = -112]outcome_pred.south) rectangle ([xshift = 40, yshift = 2]seg_pred.north);
+\draw[rounded corners, thick] ([xshift = -40, yshift = -109]outcome_pred.south) rectangle ([xshift = 40, yshift = 2]seg_pred.north);
 
 \end{tikzpicture}%
-\includegraphics[width=0.5\linewidth]{images/se-resnet-clf-vs-mtl.pdf}
+\includegraphics[width=0.5\linewidth]{images/tresnets-clf-vs-mtl.pdf}
+
+The multi-task learning (MTL) paradigm. Experiments indicates its efficacy.
 
 }
 
@@ -160,7 +169,7 @@ $^2${\it Tianjin Medical University} \\
 %	Loss functions comparison
 %----------------------------------------------------------------------------------------
 
-\headerbox{Loss functions}{name=loss, column=0, span=1, below=nn}{
+\headerbox{Loss Function Choices}{name=loss, column=0, span=1, below=nn}{
 % finished
 
 \includegraphics[width=\linewidth]{images/mtl-se-resnet-lossA-vs-lossB.pdf}
@@ -168,7 +177,7 @@ $^2${\it Tianjin Medical University} \\
 \begin{itemize}
     \item Loss-A: Asymmetric Loss
     \vspace{-0.2cm}
-    \item Loss-B: Weighted Binary Cross Entropy Loss
+    \item Loss-B: Weighted BCE Loss
 \end{itemize}
 
 }
@@ -177,9 +186,15 @@ $^2${\it Tianjin Medical University} \\
 %----------------------------------------------------------------------------------------
 
 \headerbox{Demographic Features}{name=dem, column=0, span=1, below=loss}{
-% NOT finished
+% finished
 
-to write
+\begin{itemize}
+    \item Some demographic features are strongly correlated with ``Outcome''.
+    \vspace{-0.2cm}
+    \item A random forest classifier using demographic features and the murmur predictions as input improved outcome sores (reduced the outcome cost).
+    \vspace{-0.2cm}
+    \item Our final submission \textbf{DID NOT} use demographic features and related auxiliary (e.g. random forest) classifiers.
+\end{itemize}
 
 }
 
@@ -188,16 +203,16 @@ to write
 %----------------------------------------------------------------------------------------
 
 \headerbox{Preprocess Pipeline and Augmentations}{name=data, column=1, row=1, span=2, below=mtl}{
-% not finished
+% finished
 \begin{itemize}
     \item Resampling to 1000 Hz.
     \vspace{-0.2cm}
     \item Butterworth bandpass filtering of order 3 and cutoff frequencies 25 - 400 Hz.
     \vspace{-0.2cm}
     \item Z-score normalization to zero mean and unit variance.
-    \item adding coloured noises.
+    \item Adding coloured noises.
     \vspace{-0.2cm}
-    \item polarity inversion (flipping).
+    \item Polarity inversion (flipping).
 \end{itemize}
 }
 
@@ -208,13 +223,13 @@ to write
 \headerbox{Training Setups}{name=training,span=2,column=1,row=1, below=data}{
 % finished
 \begin{itemize}
-    \item optimizer: AMSGrad variant of {\bf AdamW} with {\bf OneCycleLR} scheduler.
+    \item Optimizer: AMSGrad variant of {\bf AdamW} with {\bf OneCycleLR} scheduler.
     \vspace{-0.2cm}
-    \item stratified train-val split: 80\% -- 20\%.
+    \item Stratified train-validation split: 80\% -- 20\%.
     \vspace{-0.2cm}
-    \item batch size 32; epoch number $\leq 60$ with early stopping.
+    \item Batch size 32; epoch number $\leq 60$ with early stopping.
     \vspace{-0.2cm}
-    \item freeze backbone from specific epoch (typically 30).
+    \item Freeze backbone from specific epoch (typically 30).
 \end{itemize}
 }
 
@@ -236,16 +251,25 @@ to write
     Ranking & \textbf{79/303} & \textbf{21/303} & NA \\ \hline
 \end{tabular}
 \end{center}
+Scores on the train, and train-val sets are provided with mean and standard deviation over most of our offline experiments. Scores on the hidden validation set are provided with the best scores out of the 10 submissions.
 }
 
 %----------------------------------------------------------------------------------------
 %	Limitations, Discussions
 %----------------------------------------------------------------------------------------
 
-\headerbox{Limitations and Discussions}{name=discussion, column=0, below=submission, span=3}{
+\headerbox{Discussions and Limitations}{name=discussion, column=0, below=dem, span=3}{
 % not finished
-\begin{itemize} 
-\item to write
+\begin{itemize}
+\item Our multi-task learning (MTL) paradigm proved practical for the problems of heart murmur detection and clinical outcome identification from PCGs. The additional segmentation head makes the shared representation (the common backbone) learn more general features and thus improves the performances for the original two classification tasks the Challenge raised.
+\vspace{-0.2cm}
+\item All our models used \textbf{time-domain} signals, i.e. the \textbf{waveforms} as inputs. The derived \textbf{time-frequency-domain} signals, for example, the \textbf{spectrograms}, were not tested. Models that accept mixed-type inputs were not tested either.
+\vspace{-0.2cm}
+\item The need for Z-score normalization has to be reconsidered. More frequency-domain augmentation methods should be applied.
+\vspace{-0.2cm}
+\item The convolutional neural backbones proved effective, but still have room for improvements compared to top teams.
+\vspace{-0.2cm}
+\item The potential of models with the \textbf{transformer architecture} (e.g. the \textbf{wav2vec2} model) were not fully explored. As well as the powerfulness of model pretraining via self-supervised learning on larger datasets (e.g. the PhysioNet EPHNOGRAM dataset, etc.).
 \end{itemize}
 }
 
@@ -272,7 +296,7 @@ to write
 
 \headerbox{Acknowledgements}{name=acknowledgements, column=0, below=discussion, span=3}{
 % finished
-\smaller 
+% \smaller
 We would like to thank professor {\bf Deren Han} from the School of Mathematical Sciences, Beihang University and professor {\bf Wenjian Yu} from the Department of Computer Science and Technology, BNRist, Tsinghua University for generously providing GPU servers to help accomplish this work.
 
 % \hfill \small \textit{Code, configs, etc. available at \href{https://github.com/DeepPSP/cinc2021}{https://github.com/DeepPSP/cinc2021}.}
@@ -284,7 +308,7 @@ We would like to thank professor {\bf Deren Han} from the School of Mathematical
 
 \headerbox{}{name=foottext, column=0, span=3, below=acknowledgements, textborder=none, headerborder=none,  boxheaderheight=0pt}{
 % finished
-\hfill \small \textit{Code, configs, etc. available at \href{https://github.com/DeepPSP/cinc2022}{https://github.com/DeepPSP/cinc2022}.}
+\hfill \small \textit{Code, configs, etc. available at https://github.com/DeepPSP/cinc2022}.
 }
 
 
