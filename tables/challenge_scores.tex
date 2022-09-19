@@ -1,17 +1,17 @@
 
 \begin{table}[!htp]
 \centering
-\setlength\tabcolsep{4pt}
-\begin{tabular}{c|c|c|c}
-    \hline
-    & \textbf{Murmur} & \multicolumn{2}{c}{\textbf{Outcome}} \\
+\setlength\tabcolsep{2pt}
+\begin{tabular}{@{\extracolsep{6pt}}c|c|c|c@{}}
+    \hlineB{3.5}
+    & \textbf{Murmur} & \multicolumn{2}{c}{\textbf{Outcome}} \\ \cline{3-4}
     & \textbf{wt. acc.} & \multicolumn{1}{c}{\textbf{cost}} & \multicolumn{1}{c}{wt. acc.} \\ \hline
     Training & 0.757 & 12244 & 0.770 \\
     Cross val. & $0.86\pm 0.01$ & $11341\pm 336$ & $0.79\pm 0.05$ \\ \hline
     Hidden val. & 0.678 & 10647 & 0.671 \\
     Hidden test & \textbf{0.736} & \textbf{12944} & 0.761 \\
-    Ranking & \textbf{9/26} & \textbf{12/26} & NA \\
-    \hline
+    Ranking & \textbf{14 / 40} & \textbf{19 / 39} & 10 / 39 \\
+    \hlineB{3.5}
 \end{tabular}
 \caption{Primary scores on the whole public training set, cross-validation set \ref{subsec:training} left out from the training data, hidden validation, and the hidden test set. ``wt. acc.'' is the abbreviation for weighted accuracy. Scores on the train and validation sets are of the form $mean \pm std. dev.$ calculated over all our offline experiments.}
 \label{tab:challenge_scores}
