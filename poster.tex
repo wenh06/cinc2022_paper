@@ -46,7 +46,7 @@
 \definecolor{zkbackground}{RGB}{230,232,234}
 
 
-\usetikzlibrary{shapes,arrows,external,decorations.pathmorphing,backgrounds,positioning,fit,petri,calc,hobby,cd}
+\usetikzlibrary{shapes, arrows, external, decorations.pathmorphing, backgrounds, positioning, fit, petri, calc, hobby, cd}
 
 
 \begin{document}
@@ -161,7 +161,7 @@ A part of the backbones (the shared representation) we experimented with.
 \end{tikzpicture}%
 \includegraphics[width=0.5\linewidth]{images/tresnets-clf-vs-mtl.pdf}
 
-The multi-task learning (MTL) paradigm. Experiments indicates its efficacy.
+The multi-task learning (MTL) paradigm. Experiments indicate its efficacy.
 
 }
 
@@ -207,7 +207,7 @@ The multi-task learning (MTL) paradigm. Experiments indicates its efficacy.
 \begin{itemize}
     \item Resampling to 1000 Hz.
     \vspace{-0.2cm}
-    \item Butterworth bandpass filtering of order 3 and cutoff frequencies 25 - 400 Hz.
+    \item Butterworth bandpass filtering of order 3 and 25 - 400 Hz cutoff frequencies.
     \vspace{-0.2cm}
     \item Z-score normalization to zero mean and unit variance.
     \item Adding coloured noises.
@@ -243,15 +243,15 @@ The multi-task learning (MTL) paradigm. Experiments indicates its efficacy.
 \begin{center}
 \begin{tabular}{r|c|c|c}
     \hline
-    & \textbf{Murmur} & \multicolumn{2}{c}{\textbf{Outcome}} \\
-    & \textbf{weighted accuracy} & \multicolumn{1}{c}{\textbf{cost}} & \multicolumn{1}{c}{weighted accuracy} \\ \hline
+    & \textbf{Murmur} & \multicolumn{2}{c}{\textbf{Outcome}} \\ \cline{3-4}
+    & \textbf{weighted accuracy} & {\textbf{cost}} & {weighted accuracy} \\ \hline
     Train & $0.88\pm 0.05$ & $8452\pm 2324$ & $0.88\pm 0.07$ \\
-    Train-val & $0.86\pm 0.01$ & $11341\pm 336$ & $0.79\pm 0.05$ \\ \hline
-    Hidden val & \textbf{0.689} & \textbf{9471.652} & NA \\
+    Cross-validation & $0.86\pm 0.01$ & $11341\pm 336$ & $0.79\pm 0.05$ \\ \hline
+    Hidden validation & \textbf{0.689} & \textbf{9471.652} & NA \\
     Ranking & \textbf{79/303} & \textbf{21/303} & NA \\ \hline
 \end{tabular}
 \end{center}
-Scores on the train, and train-val sets are provided with mean and standard deviation over most of our offline experiments. Scores on the hidden validation set are provided with the best scores out of the 10 submissions.
+Scores on the train and cross-validation sets are provided with mean and standard deviation over most of our offline experiments. Scores on the hidden validation set are provided with the best scores out of the 10 submissions.
 }
 
 %----------------------------------------------------------------------------------------
@@ -267,7 +267,7 @@ Scores on the train, and train-val sets are provided with mean and standard devi
 \vspace{-0.2cm}
 \item The need for Z-score normalization has to be reconsidered. More frequency-domain augmentation methods should be applied.
 \vspace{-0.2cm}
-\item The convolutional neural backbones proved effective, but still have room for improvements compared to top teams.
+\item The convolutional neural backbones proved effective, but still have room for improvement compared to top teams.
 \vspace{-0.2cm}
 \item The potential of models with the \textbf{transformer architecture} (e.g. the \textbf{wav2vec2} model) were not fully explored. As well as the powerfulness of model pretraining via self-supervised learning on larger datasets (e.g. the PhysioNet EPHNOGRAM dataset, etc.).
 \end{itemize}
@@ -299,18 +299,16 @@ Scores on the train, and train-val sets are provided with mean and standard devi
 % \smaller
 We would like to thank professor {\bf Deren Han} from the School of Mathematical Sciences, Beihang University and professor {\bf Wenjian Yu} from the Department of Computer Science and Technology, BNRist, Tsinghua University for generously providing GPU servers to help accomplish this work.
 
-% \hfill \small \textit{Code, configs, etc. available at \href{https://github.com/DeepPSP/cinc2021}{https://github.com/DeepPSP/cinc2021}.}
 }
 
 %----------------------------------------------------------------------------------------
-%	link to the github repository
+%	link to the GitHub repository
 %----------------------------------------------------------------------------------------
 
 \headerbox{}{name=foottext, column=0, span=3, below=acknowledgements, textborder=none, headerborder=none,  boxheaderheight=0pt}{
 % finished
 \hfill \small \textit{Code, configs, etc. available at https://github.com/DeepPSP/cinc2022}.
 }
-
 
 \end{poster}
 
