@@ -1,4 +1,4 @@
-%% cinc-abstract.cls 
+%% cinc-abstract.cls
 %%
 %% Adaptation of cinc.cls to suit the format of the conference program book
 %% of "Computing in Cardiology"

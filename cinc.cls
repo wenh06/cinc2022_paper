@@ -6,7 +6,7 @@
 %%
 %%
 %% History:
-%%  * 1st version   6-October-1999  
+%%  * 1st version   6-October-1999
 %%  * 1st revison   8-March-2000
 %%                  - fix table captions (no indent, no \sc)
 %%                  - full figure name, e.g. Figure instead of Fig.
@@ -15,7 +15,7 @@
 %%                  - fixed margins
 %%                  - fixed spacing around ((sub)sub)section headers
 %%                  - added subsubsection defs to match section and subsection
-%%                  - fixed position of title block 
+%%                  - fixed position of title block
 %%  * 3rd revision  6 October 2004 (George Moody)
 %%                  - when using this file with pdflatex, the /Creator tag
 %%		      is now set to CinC-2004
@@ -26,7 +26,7 @@
 %%		      obsolete)
 %%  * 5th revision  20 July 2006 (George Moody)
 %%                  - added 'balance' (to equalize columns on final page;
-%%                    thanks to Erik Bojorges for the suggestion) 
+%%                    thanks to Erik Bojorges for the suggestion)
 %%  * 6th revision  11 June 2008 (George Moody)
 %%                  - added 'cite' (to collapse refs, e.g. [3,4,5] -> [3-5];
 %%                    thanks to Phil Stewart for the suggestion)
@@ -41,7 +41,7 @@
 %% all changes marked with !PN
 %%
 %% WARNING: math font problems and workaround:
-%%          Standard math commands like 
+%%          Standard math commands like
 %%              $\mathbf{N}(0,P(0))$
 %%          will not work properly. The reason is, that this is
 %%          a simple hack of an old LaTeX2.09 style files.
@@ -50,7 +50,7 @@
 %%          They are responsible for the font problems.
 %%          This is a known feature, see
 %%              http://www.tex.ac.uk/CTAN/latex/bugs.html
-%%          
+%%
 %%      WORKAROUND:
 %%      Use an additional pair of braces, like
 %%      {\mathbf{y}}
@@ -652,7 +652,7 @@ page \thepage \space undefined}}%
 \def\abstract{%
     \if@twocolumn                                          %!HAK
       \fontsize{11}{11}\selectfont
-      \centerline{\bf Abstract }\vspace{1em}\normalsize\it     %!HAK 
+      \centerline{\bf Abstract }\vspace{1em}\normalsize\it     %!HAK
     \else
       \begin{center}\vspace{-0.8em}\small\bf Abstract\end{center}\quotation\small
     \fi}
@@ -708,9 +708,9 @@ page \thepage \space undefined}}%
 
 \def\section{\@startsection {section}{1}{\z@}{1.0em 		      % GBM
                plus .5ex minus .2ex}{1.0em plus .2ex}{\large\bf}}     %!HAK
-\def\subsection{\@startsection{subsection}{2}{\z@}{1.0em	      % GBM 
+\def\subsection{\@startsection{subsection}{2}{\z@}{1.0em	      % GBM
                plus .5ex minus .2ex}{1.0em plus .2ex}{\large\bf}}     %!HAK
-\def\subsubsection{\@startsection{subsubsection}{3}{\z@}{1.0em	      % GBM 
+\def\subsubsection{\@startsection{subsubsection}{3}{\z@}{1.0em	      % GBM
                plus .5ex minus .2ex}{1.0em plus .2ex}{\large\bf}}     % GBM
 
 \if@technote
@@ -773,7 +773,7 @@ page \thepage \space undefined}}%
                 \fontsize{9}{11}\selectfont
                 \setlength{\parindent}{0pt}
                 \setlength{\parskip}{5pt plus 2pt minus 1pt}\vspace{2em}
-                Address for correspondence: \par 
+                Address for correspondence: \par
                 }{\normalsize}
 
 % Set parameters for PDF output if needed (GBM)
@@ -785,4 +785,4 @@ page \thepage \space undefined}}%
 \pdfinfo{/Creator (CinC-2013)}
 \fi
 
-\endinput 
+\endinput

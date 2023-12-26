@@ -21,7 +21,7 @@
              \everymath{#1}%
              \let\f@size#2\selectfont #3}}}
 
-% adds underset, overset, sideset and 
+% adds underset, overset, sideset and
 % substack features from amsmath.sty (Companion p. 226)
 
 \def\invalid@tag#1{\@amsmath@err{#1}{\the\tag@help}\gobble@tag}
@@ -104,7 +104,7 @@ $\m@th\scriptstyle##$\hfil\crcr
  \advance\dimen@ by1.667\wd\@ne
  \mkern-\leftroot@ mu\mkern5mu\raise.6\dimen@\copy\rootbox
  \mkern-10mu\mkern\leftroot@ mu\boxz@}
- 
+
 %   definition of \boxed (math in frame, no dollars) p 225
 
 \def\boxed#1{\fbox{\m@th$\displaystyle#1$}}
@@ -115,7 +115,7 @@ $\m@th\scriptstyle##$\hfil\crcr
   \ifmmode\@xp\mathpalette\@xp\mathsm@sh\else
         \@xp\makesm@sh\fi{#2}}
 
-% additional difinitions for arrows 
+% additional difinitions for arrows
 % zero mm wide #2 mm long vertical arrow shifted 1 mm to left, 1 mm up
 \newcommand{\varrow}[2]{%
 \unitlength=1mm
@@ -136,4 +136,4 @@ $\m@th\scriptstyle##$\hfil\crcr
 \endinput
 %% end of setstack.sty
 %% Corrections history:
-%% 
+%%

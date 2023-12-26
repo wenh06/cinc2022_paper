@@ -9,7 +9,7 @@
 %% merlin.mbs  (with options: `tail,,seq-no,nm-rvx,ed-rev,dt-jnl,yrp-semi,yrpp-xsp,jxper,jttl-rm,jnm-x,btit-rm,bt-rm,bkpg-x,add-pub,pre-edn,isbn,issn,url,url-blk,edpar,ppx,ed,xedn,jabr,xand,em-x,nfss,{}')
 %% ----------------------------------------
 %% *** Computers in Cardiology proceedings style by HA Kestler and GB Moody ***
-%% 
+%%
 %% Copyright 1994-1999 Patrick W Daly
  % ===============================================================
  % IMPORTANT NOTICE:
