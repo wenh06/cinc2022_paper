@@ -105,6 +105,27 @@ jobs:
           gettitlestring
           letltxmacro
           relsize
+          calrsfs
+          standalone
+          xetex
+          environ
+          tocbibind
+          setspace
+          rsfs
+          fancyhdr
+          tikzmark
+          titlesec
+          anysize
+          listings
+          newtxsf
+          float
+          boxedminipage
+          threeparttable
+          pgfplots
+          xstring
+          newtx
+          jknapltx
+          arydshln
     - name: Install latexmk and extra software
       run: |
         sudo apt install latexmk -y
