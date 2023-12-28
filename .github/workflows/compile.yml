@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
 
 env:
-  ARTIFACT_NAME: thesis
+  ARTIFACT_NAME: paper
   ARTIFACT_DIR: build
 
 jobs:
