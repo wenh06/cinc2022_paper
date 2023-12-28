@@ -1,6 +1,6 @@
 # This workflow will build the docs using Sphinx and check for errors.
 
-name: Test Compile with latexmk
+name: Compile with latexmk
 
 on:
   push:
@@ -12,6 +12,9 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 env:
   ARTIFACT_NAME: paper
