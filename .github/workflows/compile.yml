@@ -56,7 +56,8 @@ jobs:
       run: |
         python -m pip list
     - name: Setup TeX Live
-      uses: teatimeguest/setup-texlive-action@v3
+      # uses: teatimeguest/setup-texlive-action@v3
+      uses: zauguin/install-texlive@v4
       with:
         # version: 2020
         # List of TeXLive-packages contained in the scheme-small
