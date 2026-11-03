@@ -42,8 +42,10 @@
 *.synctex
 *.synctex.gz\(busy\)
 *.synctex.gz
+*.spl
 
-tikz/
+!tikz
+tikz/*
 !tikz/.keep
 
 
@@ -61,7 +63,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-build/
+# build/
 develop-eggs/
 dist/
 downloads/
@@ -196,3 +198,7 @@ log
 *.npy
 
 !images/*.pdf
+
+!build
+build/*
+!build/.keep

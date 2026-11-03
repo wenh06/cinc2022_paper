@@ -96,15 +96,22 @@ def main():
         f"""latexmk -pdflatex -f -outdir="{str(project_dir)}" """
         f"""-jobname="{tex_entry_file.stem}" "{str(tex_entry_file)}" """
     )
-    exitcode, _ = execute_cmd(cmd)
+    try:
+        exitcode, _ = execute_cmd(cmd)
+    except KeyboardInterrupt:
+        # clean up
+        cmd = f"""latexmk -C -outdir="{str(project_dir)}" "{str(tex_entry_file)}" """
+        execute_cmd(cmd, raise_error=False)
+        print("Compilation cancelled.")
+        exitcode = 1
     if exitcode != 0:
         sys.exit(exitcode)
-    generated_pdf_file = project_dir / f"{main_tex_file.stem}.pdf"
+    generated_pdf_file = project_dir / f"{tex_entry_file.stem}.pdf"
     suffix = time.strftime("%Y%m%d-%H%M%S")
-    if main_tex_file.stem == "main" and handout:
+    if tex_entry_file.stem == main_tex_file.stem and handout:
         backup_pdf_file = build_dir / f"CinC2022-Paper-{suffix}.pdf"
     else:
-        backup_pdf_file = build_dir / f"{main_tex_file.stem}.pdf"
+        backup_pdf_file = build_dir / f"{tex_entry_file.stem}.pdf"
     shutil.copy(generated_pdf_file, backup_pdf_file)
     # also copy the log file
     shutil.copy(generated_pdf_file.with_suffix(".log"), backup_pdf_file.with_suffix(".log"))
@@ -115,7 +122,7 @@ def main():
     if exitcode != 0:
         sys.exit(exitcode)
     # in case bbl file is not cleaned up
-    bbl_file = project_dir / f"{main_tex_file.stem}.bbl"
+    bbl_file = project_dir / f"{tex_entry_file.stem}.bbl"
     if bbl_file.exists():
         bbl_file.unlink()
     # clear files of the pattern xelatex*.fls
