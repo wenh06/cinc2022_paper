@@ -84,7 +84,6 @@ jobs:
           graphics-cfg
           latexconfig
           uniquecounter
-          l3backend
           intcalc
           mathtools
           algorithm2e
